@@ -98,6 +98,35 @@ class Regress extends JFrame implements ActionListener
 		}
 	}
 	
+	public static void file_writer(String file_name) {
+		int sepInd;
+		float xTemp,yTemp;
+		
+		try {
+			FileReader fr = new FileReader(file_name);
+			BufferedReader buf = new BufferedReader(fr);
+			String line = "";
+			String lineTemp;
+			
+			while((line = buf.readLine()) != null) {
+				sepInd = line.indexOf(",");
+				if (sepInd != -1) {
+					lineTemp = line.substring(0,sepInd-1);
+					xTemp = Float.parseFloat(lineTemp);
+					xArray.add(xTemp);
+					lineTemp = line.substring(sepInd+1);
+					yTemp = Float.parseFloat(lineTemp);
+					yArray.add(yTemp);
+					file_flag = 1;
+				} else {
+					System.out.println("Could not parse file!");
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("Could not open file");
+		}
+	}
+	
 	public static void regression() {
 		float sumx = 0.0f, sumy = 0.0f, xx = 0.0f, xy = 0.0f;
 		int num_points;
