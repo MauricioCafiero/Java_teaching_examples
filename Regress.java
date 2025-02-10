@@ -57,6 +57,7 @@ class Regress extends JFrame implements ActionListener
 				regression();
 				if (reg_flag != -1) {
 					reg_output.setText("best fit line is: y = " + m + "x + " +b);
+					file_writer("test_out.txt");
 				} else {
 					reg_output.setText("Could not perform regression!");
 				}
@@ -99,31 +100,21 @@ class Regress extends JFrame implements ActionListener
 	}
 	
 	public static void file_writer(String file_name) {
-		int sepInd;
-		float xTemp,yTemp;
 		
 		try {
-			FileReader fr = new FileReader(file_name);
-			BufferedReader buf = new BufferedReader(fr);
+			FileWriter fw = new FileWriter(file_name);
+			BufferedWriter buf = new BufferedWriter(fw);
 			String line = "";
 			String lineTemp;
 			
-			while((line = buf.readLine()) != null) {
-				sepInd = line.indexOf(",");
-				if (sepInd != -1) {
-					lineTemp = line.substring(0,sepInd-1);
-					xTemp = Float.parseFloat(lineTemp);
-					xArray.add(xTemp);
-					lineTemp = line.substring(sepInd+1);
-					yTemp = Float.parseFloat(lineTemp);
-					yArray.add(yTemp);
-					file_flag = 1;
-				} else {
-					System.out.println("Could not parse file!");
-				}
-			}
+			buf.write("m = " + Float.toString(m));
+				buf.newLine();
+			buf.write("b = " + Float.toString(b));
+				buf.newLine();
+			buf.close();
+			
 		} catch (IOException e) {
-			System.out.println("Could not open file");
+			System.out.println("Could not write to file");
 		}
 	}
 	
