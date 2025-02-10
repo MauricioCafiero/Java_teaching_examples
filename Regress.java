@@ -38,6 +38,8 @@ class Regress extends JFrame implements ActionListener
 		reg_btn.addActionListener(this);
 	}
 	
+	//add button for file saving and add function to implement it.
+	
 	public void actionPerformed(ActionEvent event) {
 			String file_to_read;
 			
