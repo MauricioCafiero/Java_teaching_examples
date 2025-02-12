@@ -18,6 +18,9 @@ class Regress extends JFrame implements ActionListener
 	static JTextField file_input = new JTextField("file to open",50);
 	JButton file_btn = new JButton("OpenFile");
 	JButton reg_btn = new JButton("Perform Regression");
+	static JTextField file_save = new JTextField("filename for saving",50);
+	JButton filesave_btn = new JButton("Save File");
+	JLabel filesave_lab = new JLabel("No file saved");
 	
 	public Regress() {
 		super( "Swing Window");
@@ -33,15 +36,20 @@ class Regress extends JFrame implements ActionListener
 		pnl.add(filestatus_lab);
 		pnl.add(reg_btn);
 		pnl.add( reg_output );
+		pnl.add( file_save);
+		pnl.add(filesave_btn);
+		pnl.add(filesave_lab);
 		reg_btn.setEnabled(false);
+		filesave_btn.setEnabled(false);
 		file_btn.addActionListener(this);
 		reg_btn.addActionListener(this);
+		filesave_btn.addActionListener(this);
 	}
 	
 	//add button for file saving and add function to implement it.
 	
 	public void actionPerformed(ActionEvent event) {
-			String file_to_read;
+			String file_to_read, file_to_write;
 			
 			if (event.getSource() == file_btn) {
 				file_to_read = file_input.getText();
@@ -57,10 +65,15 @@ class Regress extends JFrame implements ActionListener
 				regression();
 				if (reg_flag != -1) {
 					reg_output.setText("best fit line is: y = " + m + "x + " +b);
+					filesave_btn.setEnabled(true);
 					file_writer("test_out.txt");
 				} else {
 					reg_output.setText("Could not perform regression!");
 				}
+			} else if (event.getSource() == filesave_btn) {
+				file_to_write = file_save.getText();
+				file_writer(file_to_write);
+				filesave_lab.setText("Wrote file :" + file_to_write);
 			}
 	}
 	
